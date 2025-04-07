@@ -39,6 +39,27 @@
             padding: 10px 20px;
             cursor: pointer;
         }
+        .task-card{
+            border:1px solid black;
+            margin: 10px;
+            padding: 10px;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 0 10px black(0,0,0,0.1);
+        }
+        .task-card-title{
+            font-size: 20px;
+            margin: 0;
+        }
+        .task-card-priority{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color:  #FFF1D5;
+            width:80px ;
+            text-align: center;
+            border-radius: 20px;
+        }
         @media (max-width: 768px){
             .add-task-container{
                 padding:10px;
@@ -61,12 +82,16 @@
                 font-size: 16px;
                 margin-bottom:20px;
                 width: 300px;
+                padding:2px 4px;
             }
         }
     </style>
 </head>
 <body>
     <h1 class="heading">ToDo App</h1>
+    <div class="todo-list" id="todo-list">
+
+    </div>
     <div class="add-task-container">
     <input type="text" id="task" class="task-input"/>
     <select id="priority" class="priority-select">
@@ -77,7 +102,7 @@
     <button onclick="addTask()" class="btn">Add Task</button>
 </div>
 <script>
-    const tasks=[];
+    let tasks=[];
     function addTask(){
         const inputTaskElement=document.getElementById('task');
         const inputPriorityElement=document.getElementById('priority');
@@ -86,10 +111,34 @@
             task:inputTaskElement.value,
             priority:inputPriorityElement.value || 'medium'
         };
-        tasks.push(newTask);
+        tasks.unshift(newTask);
 
         localStorage.setItem("tasks",JSON.stringify(tasks));
+        renderToDoList(tasks);
     }
+       const savedTasks=localStorage.getItem("tasks");
+
+       if(savedTasks){
+        tasks=JSON.parse(savedTasks);
+       }
+
+       function renderToDoList(taskList){
+        const todoListElement=document.getElementById("todo-list");
+
+        todoListElement.innerHTML="";
+
+        for(let i=0; i<taskList.length; i++){
+            const taskObj=taskList[i];
+
+            todoListElement.innerHTML +=
+            <div class="task-card">
+                <h3 class="task-card-title">${taskObj.task}</h3>
+                <span class="task-card-priority">${taskObj.priority}</span>
+            </div>
+            ;
+        }
+       }
+       renderToDoList(tasks);
 </script>
 </body>
 </html>
