@@ -12,19 +12,28 @@
         }
         .add-task-container{
             background-color:#9EC6F3 ;
-            padding:10px 20px;
+            padding:20px;
             position: fixed;
             bottom: 0;
             right: 0;
             left: 0;
+            display:flex;
+            justify-content: center;
+        }
+        .task-input{
+           font-size:23px;
+           margin: 0 10px;
+        }
+        .priority-select{
+
         }
     </style>
 </head>
 <body>
     <h1>ToDo App</h1>
     <div class="add-task-container">
-    <input type="text" id="task"/>
-    <select id="priority">
+    <input type="text" id="task" class="task-input"/>
+    <select id="priority" class="priority-select">
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
