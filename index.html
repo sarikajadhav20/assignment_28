@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment 28</title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            background-color:#9FB3DF ;
+        }
+    </style>
 </head>
 <body>
     <h1>ToDo App</h1>
+    <div>
     <input type="text" id="task"/>
     <select id="priority">
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
     </select>
-    <button>Add Task</button>
+    <button onclick="addTask()">Add Task</button>
+</div>
 </body>
 </html>
