@@ -5,153 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment 28</title>
     <style>
-        body{
-            margin:0;
-            padding:0;
-            background-color:#9FB3DF ;
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #9FB3DF;
         }
-        .heading{
+        .heading {
             text-align: center;
             color: #FFF1D5;
         }
-        .add-task-container{
-            background-color:#9EC6F3 ;
-            padding:20px;
+        .add-task-container {
+            background-color: #9EC6F3;
+            padding: 20px;
             position: fixed;
             bottom: 0;
             right: 0;
             left: 0;
-            display:flex;
+            display: flex;
             justify-content: center;
         }
-        .task-input{
-           font-size:22px;
-           margin: 0 10px;
-        }
-        .priority-select{
-            font-size:22px;
+        .task-input {
+            font-size: 22px;
             margin: 0 10px;
         }
-        .btn{
-            font-size:22px;
+        .priority-select {
+            font-size: 22px;
+            margin: 0 10px;
+        }
+        .btn {
+            font-size: 22px;
             background-color: #FFF1D5;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
         }
-        .task-card{
-            border:1px solid black;
+        .task-card {
+            border: 1px solid black;
             margin: 10px;
             padding: 10px;
             position: relative;
             border-radius: 10px;
-            box-shadow: 0 0 10px black(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .task-card-title{
+        .task-card-title {
             font-size: 20px;
             margin: 0;
         }
-        .task-card-priority{
+        .task-card-priority {
             position: absolute;
             right: 40px;
             top: 10px;
-            background-color:  #FFF1D5;
-            width:80px ;
+            background-color: #FFF1D5;
+            width: 80px;
             text-align: center;
             border-radius: 20px;
         }
-        .delete{
-           height:20px;
-           position: absolute;
-           right: 10px;
-           top: 10px;
+        .delete {
+            height: 20px;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
         }
 
-        @media (max-width: 768px){
-            .add-task-container{
-                padding:10px;
+        @media (max-width: 768px) {
+            .add-task-container {
+                padding: 10px;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
             }
-            .task-input{
-                font-size:16px;
-                margin-bottom:20px;
+            .task-input {
+                font-size: 16px;
+                margin-bottom: 20px;
                 width: 300px;
             }
-            .btn{
+            .btn {
                 font-size: 16px;
-                padding:5px 10px;
-                margin-bottom:20px;
+                padding: 5px 10px;
+                margin-bottom: 20px;
                 width: 300px;
             }
-            .priority-select{
+            .priority-select {
                 font-size: 16px;
-                margin-bottom:20px;
+                margin-bottom: 20px;
                 width: 300px;
-                padding:2px 4px;
+                padding: 2px 4px;
             }
         }
     </style>
 </head>
 <body>
     <h1 class="heading">ToDo App</h1>
-    <div class="todo-list" id="todo-list">
-
-    </div>
+    <div class="todo-list" id="todo-list"></div>
     <div class="add-task-container">
-    <input type="text" id="task" class="task-input"/>
-    <select id="priority" class="priority-select">
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
-    </select>
-    <button onclick="addTask()" class="btn">Add Task</button>
-</div>
-<script>
-    let tasks=[];
-    function addTask(){
-        const inputTaskElement=document.getElementById('task');
-        const inputPriorityElement=document.getElementById('priority');
+        <input type="text" id="task" class="task-input" placeholder="Enter task"/>
+        <select id="priority" class="priority-select">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+        <button onclick="addTask()" class="btn">Add Task</button>
+    </div>
+    <script>
+        let tasks = [];
+        
+        function addTask() {
+            const inputTaskElement = document.getElementById('task');
+            const inputPriorityElement = document.getElementById('priority');
 
-        const newTask={
-            task:inputTaskElement.value,
-            priority:inputPriorityElement.value || 'medium'
-        };
-        tasks.unshift(newTask);
+            const newTask = {
+                task: inputTaskElement.value,
+                priority: inputPriorityElement.value || 'medium'
+            };
+            tasks.unshift(newTask);
 
-        localStorage.setItem("tasks",JSON.stringify(tasks));
-        renderToDoList(tasks);
-    }
-       const savedTasks=localStorage.getItem("tasks");
-
-       if(savedTasks){
-        tasks=JSON.parse(savedTasks);
-       }
-
-       function renderToDoList(taskList){
-        const todoListElement=document.getElementById("todo-list");
-
-        todoListElement.innerHTML="";
-
-        for(let i=0; i<taskList.length; i++){
-            const taskObj=taskList[i];
-
-            todoListElement.innerHTML +=
-            <div class="task-card">
-                <h3 class="task-card-title">${taskObj.task}</h3>
-                <span class="task-card-priority">${taskObj.priority}</span>
-                <img src="delete.png" onclick="removeTask(${i})" class="delete"/>
-            </div>
-            ;
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            renderToDoList(tasks);
+            inputTaskElement.value = ''; // Clear input after adding
         }
-       }
-       function removeTask(taskIndex){
-        tasks.splice(taskIndex,1);
-        localStorage.setItem("tasks",JSON.stringify(tasks));
+
+        const savedTasks = localStorage.getItem("tasks");
+
+        if (savedTasks) {
+            tasks = JSON.parse(savedTasks);
+        }
+
+        function renderToDoList(taskList) {
+            const todoListElement = document.getElementById("todo-list");
+            todoListElement.innerHTML = "";
+
+            for (let i = 0; i < taskList.length; i++) {
+                const taskObj = taskList[i];
+
+                todoListElement.innerHTML += `
+                    <div class="task-card">
+                        <h3 class="task-card-title">${taskObj.task}</h3>
+                        <span class="task-card-priority">${taskObj.priority}</span>
+                        <img src="delete.png" onclick="removeTask(${i})" class="delete" alt="Delete Task"/>
+                    </div>
+                `;
+            }
+        }
+
+        function removeTask(taskIndex) {
+            tasks.splice(taskIndex, 1);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            renderToDoList(tasks);
+        }
+
         renderToDoList(tasks);
-       }
-       renderToDoList(tasks);
-</script>
+    </script>
 </body>
 </html>
