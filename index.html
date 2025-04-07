@@ -53,8 +53,18 @@
     <button onclick="addTask()" class="btn">Add Task</button>
 </div>
 <script>
+    const tasks=[];
     function addTask(){
-        
+        const inputTaskElement=document.getElementById('task');
+        const inputPriorityElement=document.getElementById('priority');
+
+        const newTask={
+            task:inputTaskElement.value,
+            priority:inputPriorityElement.value || 'medium'
+        };
+        tasks.push(newTask);
+
+        localStorage.setItem("tasks",JSON.stringify(tasks));
     }
 </script>
 </body>
