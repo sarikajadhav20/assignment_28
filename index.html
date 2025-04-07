@@ -138,6 +138,11 @@
             ;
         }
        }
+       function removeTask(taskIndex){
+        tasks.splice(taskIndex,1);
+        localStorage.setItem("tasks",JSON.stringify(tasks));
+        renderToDoList(tasks);
+       }
        renderToDoList(tasks);
 </script>
 </body>
