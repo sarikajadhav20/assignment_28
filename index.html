@@ -53,13 +53,20 @@
         }
         .task-card-priority{
             position: absolute;
-            right: 10px;
+            right: 40px;
             top: 10px;
             background-color:  #FFF1D5;
             width:80px ;
             text-align: center;
             border-radius: 20px;
         }
+        .delete{
+           height:20px;
+           position: absolute;
+           right: 10px;
+           top: 10px;
+        }
+
         @media (max-width: 768px){
             .add-task-container{
                 padding:10px;
@@ -134,7 +141,7 @@
             <div class="task-card">
                 <h3 class="task-card-title">${taskObj.task}</h3>
                 <span class="task-card-priority">${taskObj.priority}</span>
-                <img src="delete.png" onclick="removeTask(${i})"/>
+                <img src="delete.png" onclick="removeTask(${i})" class="delete"/>
             </div>
             ;
         }
